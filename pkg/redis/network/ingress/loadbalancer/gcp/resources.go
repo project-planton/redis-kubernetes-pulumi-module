@@ -33,8 +33,7 @@ func addExternal(ctx *pulumi.Context) (*pulumikubernetescorev1.Service, error) {
 	i := extractInput(ctx)
 	addedKubeService, err := pulumikubernetescorev1.NewService(ctx,
 		redisloadbalancercommon.ExternalLoadBalancerServiceName,
-		getLoadBalancerServiceArgs(i, redisloadbalancercommon.ExternalLoadBalancerServiceName, i.externalHostname),
-		pulumi.Timeouts(&pulumi.CustomTimeouts{Create: "30s", Update: "30s", Delete: "30s"}), pulumi.Parent(i.namespace))
+		getLoadBalancerServiceArgs(i, redisloadbalancercommon.ExternalLoadBalancerServiceName, i.externalHostname), pulumi.Parent(i.namespace))
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create kubernetes service of type load balancer")
 	}
@@ -45,8 +44,7 @@ func addInternal(ctx *pulumi.Context) (*pulumikubernetescorev1.Service, error) {
 	i := extractInput(ctx)
 	addedKubeService, err := pulumikubernetescorev1.NewService(ctx,
 		redisloadbalancercommon.InternalLoadBalancerServiceName,
-		getInternalLoadBalancerServiceArgs(i, i.internalHostname, i.namespace),
-		pulumi.Timeouts(&pulumi.CustomTimeouts{Create: "30s", Update: "30s", Delete: "30s"}), pulumi.Parent(i.namespace))
+		getInternalLoadBalancerServiceArgs(i, i.internalHostname, i.namespace), pulumi.Parent(i.namespace))
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create kubernetes service of type load balancer")
 	}
