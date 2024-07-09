@@ -8,6 +8,8 @@ import (
 	redisnamespace "github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/namespace"
 	rediskubernetesnetwork "github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/network"
 	"github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/outputs"
+	rediskubernetespassword "github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/password"
+	rediskubernetessecret "github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/secret"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -29,6 +31,18 @@ func (resourceStack *ResourceStack) Resources(ctx *pulumi.Context) error {
 	ctx, err = redisnamespace.Resources(ctx)
 	if err != nil {
 		return errors.Wrap(err, "failed to create namespace resource")
+	}
+
+	// Create the random password resource
+	ctx, err = rediskubernetespassword.Resources(ctx)
+	if err != nil {
+		return errors.Wrap(err, "failed to create random password resource")
+	}
+
+	// Create the secret resource for mongo db root password
+	err = rediskubernetessecret.Resources(ctx)
+	if err != nil {
+		return errors.Wrap(err, "failed to create secret resource")
 	}
 
 	// Deploying a Redis Helm chart from the Helm repository.

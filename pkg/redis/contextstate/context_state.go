@@ -6,6 +6,7 @@ import (
 	rediskubernetesmodel "github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/rediskubernetes/model"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
+	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
 )
 
 const (
@@ -46,4 +47,5 @@ type AddedResources struct {
 	Namespace                   *kubernetescorev1.Namespace
 	LoadBalancerExternalService *kubernetescorev1.Service
 	LoadBalancerInternalService *kubernetescorev1.Service
+	RandomPassword              *random.RandomPassword
 }
