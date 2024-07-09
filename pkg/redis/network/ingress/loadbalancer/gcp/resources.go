@@ -88,7 +88,7 @@ func getLoadBalancerServiceArgs(i *input, serviceName, hostname string) *pulumik
 			},
 			Selector: pulumi.StringMap{
 				"app.kubernetes.io/component": pulumi.String("master"),
-				"app.kubernetes.io/instance":  pulumi.String("redis"),
+				"app.kubernetes.io/instance":  pulumi.String(i.resourceId),
 				"app.kubernetes.io/name":      pulumi.String("redis"),
 			},
 		},

@@ -1,6 +1,8 @@
 module github.com/plantoncloud/redis-kubernetes-pulumi-blueprint
 
-go 1.21
+go 1.22
+
+toolchain go1.22.5
 
 //replace github.com/plantoncloud/planton-cloud-apis => /Users/swarup/scm/github.com/plantoncloud/planton-cloud-apis
 
@@ -60,8 +62,8 @@ require (
 require (
 	github.com/plantoncloud-inc/go-commons v0.0.431
 	github.com/plantoncloud/environment-pulumi-blueprint v0.0.0-20240702152006-b9998ac116c4
-	github.com/plantoncloud/kube-cluster-pulumi-blueprint v0.0.0-20240702151918-60b3743fea2c
-	github.com/plantoncloud/planton-cloud-apis v0.0.204
+	github.com/plantoncloud/kube-cluster-pulumi-blueprint v0.0.0-20240704091135-efea59ca78af
+	github.com/plantoncloud/planton-cloud-apis v0.0.206
 	github.com/plantoncloud/pulumi-blueprint-golang-commons v0.0.0-20240703120008-7827af7d39ec
 	github.com/plantoncloud/pulumi-stack-runner-go-sdk v0.0.47
 )
