@@ -3,6 +3,7 @@ package helmchart
 import (
 	"github.com/plantoncloud/pulumi-blueprint-golang-commons/pkg/kubernetes/containerresources"
 	"github.com/plantoncloud/pulumi-blueprint-golang-commons/pkg/kubernetes/helm/convertmaps"
+	"github.com/plantoncloud/redis-kubernetes-pulumi-blueprint/pkg/redis/secret"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -28,6 +29,10 @@ func getHelmChartValuesMap(i *input) pulumi.Map {
 				"enabled": pulumi.Bool(i.containerSpec.IsPersistenceEnabled),
 				"size":    pulumi.String(i.containerSpec.DiskSize),
 			},
+		},
+		"auth": pulumi.Map{
+			"existingSecret":            pulumi.String(i.resourceName),
+			"existingSecretPasswordKey": pulumi.String(secret.RedisPasswordKey),
 		},
 	}
 }

@@ -66,6 +66,7 @@ require (
 	github.com/plantoncloud/planton-cloud-apis v0.0.206
 	github.com/plantoncloud/pulumi-blueprint-golang-commons v0.0.0-20240703120008-7827af7d39ec
 	github.com/plantoncloud/pulumi-stack-runner-go-sdk v0.0.47
+	github.com/pulumi/pulumi-random/sdk/v4 v4.14.0
 )
 
 require (
