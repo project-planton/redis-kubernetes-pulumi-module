@@ -6,7 +6,7 @@ import (
 )
 
 func GetKubeServiceNameFqdn(redisKubernetesName, namespace string) string {
-	return fmt.Sprintf("%s.%s.%s", GetKubeServiceName(redisKubernetesName), namespace, dns.DefaultDomain)
+	return fmt.Sprintf("%s-master.%s.%s", GetKubeServiceName(redisKubernetesName), namespace, dns.DefaultDomain)
 }
 
 func GetKubeServiceName(redisKubernetesName string) string {
