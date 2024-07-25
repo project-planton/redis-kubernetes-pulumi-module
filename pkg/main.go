@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes/model"
-	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/commons/kubernetes/enums/kubernetesworkloadingresstype"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/pulumikubernetesprovider"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
@@ -70,17 +69,9 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 		return nil
 	}
 
-	//depending on the ingress-type in the input, create either istio-ingress resources or
 	//create load-balancer resources
-	switch redisKubernetes.Spec.Ingress.IngressType {
-	case kubernetesworkloadingresstype.KubernetesWorkloadIngressType_load_balancer:
-		if err := s.loadBalancerIngress(ctx, createdNamespace); err != nil {
-			return errors.Wrap(err, "failed to create load-balancer ingress resources")
-		}
-	case kubernetesworkloadingresstype.KubernetesWorkloadIngressType_ingress_controller:
-		if err := s.istioIngress(ctx, createdNamespace); err != nil {
-			return errors.Wrap(err, "failed to create istio ingress resources")
-		}
+	if err := s.loadBalancerIngress(ctx, createdNamespace); err != nil {
+		return errors.Wrap(err, "failed to create load-balancer ingress resources")
 	}
 
 	//export ingress hostnames
