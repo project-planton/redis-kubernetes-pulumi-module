@@ -41,8 +41,8 @@ func helmChart(ctx *pulumi.Context,
 					},
 				},
 				"auth": pulumi.Map{
-					"existingSecret":            pulumi.String(locals.RedisKubernetes.Metadata.Name),
-					"existingSecretPasswordKey": pulumi.String("redis-password"),
+					"existingSecret":            pulumi.String(vars.RedisPasswordSecretName),
+					"existingSecretPasswordKey": pulumi.String(vars.RedisPasswordSecretKey),
 				},
 			},
 			//if you need to add the repository, you can specify `repo url`:

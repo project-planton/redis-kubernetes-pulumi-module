@@ -37,6 +37,9 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 		return errors.Wrapf(err, "failed to create %s namespace", locals.Namespace)
 	}
 
+	if err := adminPassword(ctx, createdNamespace); err != nil {
+		return errors.Wrap(err, "failed to create admin secret")
+	}
 	//install the redis helm-chart
 	if err := helmChart(ctx, createdNamespace, s.Labels); err != nil {
 		return errors.Wrap(err, "failed to create helm-chart resources")

@@ -21,6 +21,7 @@ require (
 	github.com/plantoncloud/planton-cloud-apis v0.0.211
 	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-00010101000000-000000000000
 	github.com/plantoncloud/stack-job-runner-golang-sdk v0.0.52
+	github.com/pulumi/pulumi-random/sdk/v4 v4.16.3
 )
 
 require (
@@ -89,7 +90,6 @@ require (
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/cobra v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
 	github.com/tweekmonster/luser v0.0.0-20161003172636-3fa38070dbd7 // indirect
 	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
