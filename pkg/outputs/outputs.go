@@ -7,22 +7,22 @@ import (
 )
 
 const (
-	NamespaceOutputName               = "namespace"
-	ServiceOutputName                 = "service"
-	PortForwardCommandOutputName      = "port-forward-command"
-	KubeEndpointOutputName            = "kube-endpoint"
-	IngressExternalHostnameOutputName = "ingress-external-hostname"
-	IngressInternalHostnameOutputName = "ingress-internal-hostname"
+	Namespace               = "namespace"
+	Service                 = "service"
+	PortForwardCommand      = "port-forward-command"
+	KubeEndpoint            = "kube-endpoint"
+	IngressExternalHostname = "ingress-external-hostname"
+	IngressInternalHostname = "ingress-internal-hostname"
 )
 
 func PulumiOutputToStackOutputsConverter(pulumiOutputs auto.OutputMap,
 	input *model.RedisKubernetesStackInput) *model.RedisKubernetesStackOutputs {
 	return &model.RedisKubernetesStackOutputs{
-		Namespace:          autoapistackoutput.GetVal(pulumiOutputs, NamespaceOutputName),
-		Service:            autoapistackoutput.GetVal(pulumiOutputs, ServiceOutputName),
-		PortForwardCommand: autoapistackoutput.GetVal(pulumiOutputs, PortForwardCommandOutputName),
-		KubeEndpoint:       autoapistackoutput.GetVal(pulumiOutputs, KubeEndpointOutputName),
-		ExternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressExternalHostnameOutputName),
-		InternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressInternalHostnameOutputName),
+		Namespace:          autoapistackoutput.GetVal(pulumiOutputs, Namespace),
+		Service:            autoapistackoutput.GetVal(pulumiOutputs, Service),
+		PortForwardCommand: autoapistackoutput.GetVal(pulumiOutputs, PortForwardCommand),
+		KubeEndpoint:       autoapistackoutput.GetVal(pulumiOutputs, KubeEndpoint),
+		ExternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressExternalHostname),
+		InternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressInternalHostname),
 	}
 }
