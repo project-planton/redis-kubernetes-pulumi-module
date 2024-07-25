@@ -28,15 +28,17 @@ func (s *ResourceStack) loadBalancerIngress(ctx *pulumi.Context,
 				Type: pulumi.String("LoadBalancer"), // Service type is LoadBalancer
 				Ports: kubernetescorev1.ServicePortArray{
 					&kubernetescorev1.ServicePortArgs{
-						Name:       pulumi.String("http"),
-						Port:       pulumi.Int(80),
-						Protocol:   pulumi.String("TCP"),
-						TargetPort: pulumi.String("http"), // This assumes your Redis pod has a port named 'http'
+						Name:     pulumi.String("tcp-redis"),
+						Port:     pulumi.Int(6379),
+						Protocol: pulumi.String("TCP"),
+						// This assumes your Redis pod has a port named 'redis'
+						TargetPort: pulumi.String("redis"),
 					},
 				},
 				Selector: pulumi.StringMap{
-					"app.kubernetes.io/component": pulumi.String("redis-controller"),
-					"app.kubernetes.io/instance":  createdNamespace.Metadata.Name().Elem(),
+					"app.kubernetes.io/component": pulumi.String("master"),
+					"app.kubernetes.io/instance":  pulumi.String(redisKubernetes.Metadata.Id),
+					"app.kubernetes.io/name":      pulumi.String("redis"),
 				},
 			},
 		}, pulumi.Parent(createdNamespace))
@@ -63,15 +65,17 @@ func (s *ResourceStack) loadBalancerIngress(ctx *pulumi.Context,
 				Type: pulumi.String("LoadBalancer"), // Service type is LoadBalancer
 				Ports: kubernetescorev1.ServicePortArray{
 					&kubernetescorev1.ServicePortArgs{
-						Name:       pulumi.String("http"),
-						Port:       pulumi.Int(80),
-						Protocol:   pulumi.String("TCP"),
-						TargetPort: pulumi.String("http"), // This assumes your Redis pod has a port named 'http'
+						Name:     pulumi.String("tcp-redis"),
+						Port:     pulumi.Int(6379),
+						Protocol: pulumi.String("TCP"),
+						// This assumes your Redis pod has a port named 'redis'
+						TargetPort: pulumi.String("redis"),
 					},
 				},
 				Selector: pulumi.StringMap{
-					"app.kubernetes.io/component": pulumi.String("redis-controller"),
-					"app.kubernetes.io/instance":  createdNamespace.Metadata.Name().Elem(),
+					"app.kubernetes.io/component": pulumi.String("master"),
+					"app.kubernetes.io/instance":  pulumi.String(redisKubernetes.Metadata.Id),
+					"app.kubernetes.io/name":      pulumi.String("redis"),
 				},
 			},
 		}, pulumi.Parent(createdNamespace))

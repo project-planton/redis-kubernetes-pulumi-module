@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes/model"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/commons/kubernetes/enums/kubernetesworkloadingresstype"
@@ -50,18 +51,19 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 	}
 
 	//export kubernetes service name
-	ctx.Export(ServiceOutputName, pulumi.String(redisKubernetes.Metadata.Name))
+	ctx.Export(ServiceOutputName, pulumi.Sprintf("%s-master", redisKubernetes.Metadata.Name))
 
 	//export kubernetes endpoint
 	ctx.Export(KubeEndpointOutputName,
-		pulumi.Sprintf("%s.%s.svc.cluster.local.",
+		pulumi.Sprintf("%s-master.%s.svc.cluster.local.",
 			redisKubernetes.Metadata.Name,
 			namespaceName))
 
 	//export kube-port-forward command
 	ctx.Export(PortForwardCommandOutputName, pulumi.Sprintf(
 		"kubectl port-forward -n %s service/%s 8080:8080",
-		namespaceName, redisKubernetes.Metadata.Name))
+		namespaceName,
+		fmt.Sprintf("%s-master", redisKubernetes.Metadata.Name)))
 
 	//no ingress resources required when ingress is not enabled
 	if !redisKubernetes.Spec.Ingress.IsEnabled || redisKubernetes.Spec.Ingress.EndpointDomainName == "" {

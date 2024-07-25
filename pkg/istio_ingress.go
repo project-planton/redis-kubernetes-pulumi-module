@@ -15,7 +15,10 @@ const (
 )
 
 func (s *ResourceStack) istioIngress(ctx *pulumi.Context, createdNamespace *kubernetescorev1.Namespace) error {
+	//create variable with descriptive name for the api-resource in the input
 	redisKubernetes := s.Input.ApiResource
+
+	//create certificate
 	createdCertificate, err := certmanagerv1.NewCertificate(ctx,
 		"ingress-certificate",
 		&certmanagerv1.CertificateArgs{
@@ -47,12 +50,14 @@ func (s *ResourceStack) istioIngress(ctx *pulumi.Context, createdNamespace *kube
 		return errors.Wrap(err, "error creating certificate")
 	}
 
+	//create gateway
 	_, err = istiov1.NewGateway(ctx,
 		redisKubernetes.Metadata.Id,
 		&istiov1.GatewayArgs{
 			Metadata: metav1.ObjectMetaArgs{
-				Name:      pulumi.String(redisKubernetes.Metadata.Id),
-				Namespace: createdNamespace.Metadata.Name(),
+				Name: pulumi.String(redisKubernetes.Metadata.Id),
+				//all istio gateways should be created in istio-ingress deployment namespace
+				Namespace: pulumi.String(IstioIngressNamespace),
 				Labels:    pulumi.ToStringMap(s.Labels),
 			},
 			Spec: istiov1.GatewaySpecArgs{
@@ -63,11 +68,15 @@ func (s *ResourceStack) istioIngress(ctx *pulumi.Context, createdNamespace *kube
 				},
 				Servers: istiov1.GatewaySpecServersArray{
 					&istiov1.GatewaySpecServersArgs{
-						Name: pulumi.String("redis-https"),
+						Name: pulumi.String("redis"),
 						Port: &istiov1.GatewaySpecServersPortArgs{
-							Number:   pulumi.Int(443),
-							Name:     pulumi.String("redis-https"),
-							Protocol: pulumi.String("HTTPS"),
+							//important: istio-ingress load-balancer service
+							//should accept connections on this port.
+							//this is typically archived by including this port in
+							//the istio-ingress helm chart values.
+							Number:   pulumi.Int(6379),
+							Protocol: pulumi.String("TLS"),
+							Name:     pulumi.String("redis"),
 						},
 						Hosts: pulumi.StringArray{
 							pulumi.Sprintf("%s.%s", redisKubernetes.Metadata.Id,
@@ -104,6 +113,7 @@ func (s *ResourceStack) istioIngress(ctx *pulumi.Context, createdNamespace *kube
 		return errors.Wrap(err, "error creating gateway")
 	}
 
+	//create virtual-service
 	_, err = istiov1.NewVirtualService(ctx,
 		redisKubernetes.Metadata.Id,
 		&istiov1.VirtualServiceArgs{
@@ -123,17 +133,26 @@ func (s *ResourceStack) istioIngress(ctx *pulumi.Context, createdNamespace *kube
 					pulumi.Sprintf("%s-internal.%s", redisKubernetes.Metadata.Id,
 						redisKubernetes.Spec.Ingress.EndpointDomainName),
 				},
-				Http: istiov1.VirtualServiceSpecHttpArray{
-					&istiov1.VirtualServiceSpecHttpArgs{
-						Name: pulumi.String(redisKubernetes.Metadata.Id),
-						Route: istiov1.VirtualServiceSpecHttpRouteArray{
-							&istiov1.VirtualServiceSpecHttpRouteArgs{
-								Destination: istiov1.VirtualServiceSpecHttpRouteDestinationArgs{
-									Host: pulumi.Sprintf("%s.%s.svc.cluster.local.",
+				Tcp: istiov1.VirtualServiceSpecTcpArray{
+					&istiov1.VirtualServiceSpecTcpArgs{
+						Match: istiov1.VirtualServiceSpecTcpMatchArray{
+							istiov1.VirtualServiceSpecTcpMatchArgs{
+								//important: istio-ingress load-balancer service
+								//should accept connections on this port.
+								//this is typically archived by including this port in
+								//the istio-ingress helm chart values.
+								Port: pulumi.Int(6739),
+							},
+						},
+						Route: istiov1.VirtualServiceSpecTcpRouteArray{
+							&istiov1.VirtualServiceSpecTcpRouteArgs{
+								Destination: istiov1.VirtualServiceSpecTcpRouteDestinationArgs{
+									//kubernetes service name will have '-master` as suffix
+									Host: pulumi.Sprintf("%s-master.%s.svc.cluster.local.",
 										redisKubernetes.Metadata.Name,
 										createdNamespace.Metadata.Name()),
-									Port: istiov1.VirtualServiceSpecHttpRouteDestinationPortArgs{
-										Number: pulumi.Int(8080),
+									Port: istiov1.VirtualServiceSpecTcpRouteDestinationPortArgs{
+										Number: pulumi.Int(6739),
 									},
 								},
 							},
