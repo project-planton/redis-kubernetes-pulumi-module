@@ -5,6 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes/model"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/pulumikubernetesprovider"
+	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/outputs"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -42,7 +43,7 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 	}
 
 	//export name of the namespace
-	ctx.Export(NamespaceOutputName, createdNamespace.Metadata.Name())
+	ctx.Export(outputs.NamespaceOutputName, createdNamespace.Metadata.Name())
 
 	//install the redis helm-chart
 	if err := s.helmChart(ctx, createdNamespace); err != nil {
@@ -50,16 +51,16 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 	}
 
 	//export kubernetes service name
-	ctx.Export(ServiceOutputName, pulumi.Sprintf("%s-master", redisKubernetes.Metadata.Name))
+	ctx.Export(outputs.ServiceOutputName, pulumi.Sprintf("%s-master", redisKubernetes.Metadata.Name))
 
 	//export kubernetes endpoint
-	ctx.Export(KubeEndpointOutputName,
+	ctx.Export(outputs.KubeEndpointOutputName,
 		pulumi.Sprintf("%s-master.%s.svc.cluster.local.",
 			redisKubernetes.Metadata.Name,
 			namespaceName))
 
 	//export kube-port-forward command
-	ctx.Export(PortForwardCommandOutputName, pulumi.Sprintf(
+	ctx.Export(outputs.PortForwardCommandOutputName, pulumi.Sprintf(
 		"kubectl port-forward -n %s service/%s 8080:8080",
 		namespaceName,
 		fmt.Sprintf("%s-master", redisKubernetes.Metadata.Name)))
@@ -75,9 +76,9 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 	}
 
 	//export ingress hostnames
-	ctx.Export(IngressExternalHostnameOutputName, pulumi.Sprintf("%s.%s",
+	ctx.Export(outputs.IngressExternalHostnameOutputName, pulumi.Sprintf("%s.%s",
 		redisKubernetes.Metadata.Id, redisKubernetes.Spec.Ingress.EndpointDomainName))
-	ctx.Export(IngressInternalHostnameOutputName, pulumi.Sprintf("%s-internal.%s",
+	ctx.Export(outputs.IngressInternalHostnameOutputName, pulumi.Sprintf("%s-internal.%s",
 		redisKubernetes.Metadata.Id, redisKubernetes.Spec.Ingress.EndpointDomainName))
 
 	return nil
