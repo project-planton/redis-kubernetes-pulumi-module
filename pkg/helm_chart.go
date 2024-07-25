@@ -17,17 +17,17 @@ func (s *ResourceStack) helmChart(ctx *pulumi.Context,
 
 	helmValues := getHelmValues(redisKubernetes, s.Labels)
 
-	// Deploying a Locust Helm chart from the Helm repository.
+	//install helm-chart
 	_, err := helmv3.NewChart(ctx,
 		redisKubernetes.Metadata.Id,
 		helmv3.ChartArgs{
 			Chart:     pulumi.String("redis"),
-			Version:   pulumi.String("5.1.5"), // Use the Helm chart version you want to install
+			Version:   pulumi.String("17.10.1"),
 			Namespace: createdNamespace.Metadata.Name().Elem(),
 			Values:    helmValues,
 			//if you need to add the repository, you can specify `repo url`:
 			FetchArgs: helmv3.FetchArgs{
-				Repo: pulumi.String("https://charts.redis.io"),
+				Repo: pulumi.String("https://charts.bitnami.com/bitnami"),
 			},
 		}, pulumi.Parent(createdNamespace))
 	if err != nil {
