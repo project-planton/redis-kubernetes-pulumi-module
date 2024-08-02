@@ -16,7 +16,6 @@ func loadBalancerIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *
 				Namespace: createdNamespace.Metadata.Name(),
 				Labels:    createdNamespace.Metadata.Labels(),
 				Annotations: pulumi.StringMap{
-					"planton.cloud/endpoint-domain-name":        pulumi.String(locals.RedisKubernetes.Spec.Ingress.EndpointDomainName),
 					"external-dns.alpha.kubernetes.io/hostname": pulumi.String(locals.IngressExternalHostname),
 				},
 			},
@@ -47,7 +46,6 @@ func loadBalancerIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *
 				Labels:    createdNamespace.Metadata.Labels(),
 				Annotations: pulumi.StringMap{
 					"cloud.google.com/load-balancer-type":       pulumi.String("Internal"),
-					"planton.cloud/endpoint-domain-name":        pulumi.String(locals.RedisKubernetes.Spec.Ingress.EndpointDomainName),
 					"external-dns.alpha.kubernetes.io/hostname": pulumi.String(locals.IngressInternalHostname),
 				},
 			},
