@@ -9,7 +9,7 @@ import (
 const (
 	Namespace               = "namespace"
 	Service                 = "service"
-	PortForwardCommand      = "port-forward-command"
+	KubePortForwardCommand  = "port-forward-command"
 	KubeEndpoint            = "kube-endpoint"
 	IngressExternalHostname = "ingress-external-hostname"
 	IngressInternalHostname = "ingress-internal-hostname"
@@ -20,7 +20,7 @@ func PulumiOutputsToStackOutputsConverter(pulumiOutputs auto.OutputMap,
 	return &model.RedisKubernetesStackOutputs{
 		Namespace:          autoapistackoutput.GetVal(pulumiOutputs, Namespace),
 		Service:            autoapistackoutput.GetVal(pulumiOutputs, Service),
-		PortForwardCommand: autoapistackoutput.GetVal(pulumiOutputs, PortForwardCommand),
+		PortForwardCommand: autoapistackoutput.GetVal(pulumiOutputs, KubePortForwardCommand),
 		KubeEndpoint:       autoapistackoutput.GetVal(pulumiOutputs, KubeEndpoint),
 		ExternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressExternalHostname),
 		InternalHostname:   autoapistackoutput.GetVal(pulumiOutputs, IngressInternalHostname),

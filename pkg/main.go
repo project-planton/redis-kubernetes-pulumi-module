@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes/model"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/pulumikubernetesprovider"
-	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/locals"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -16,6 +15,8 @@ type ResourceStack struct {
 }
 
 func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
+	locals := initializeLocals(ctx, s.Input)
+
 	//create kubernetes-provider from the credential in the stack-input
 	kubernetesProvider, err := pulumikubernetesprovider.GetWithKubernetesClusterCredential(ctx,
 		s.Input.KubernetesClusterCredential, "kubernetes")
@@ -37,11 +38,11 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 		return errors.Wrapf(err, "failed to create %s namespace", locals.Namespace)
 	}
 
-	if err := adminPassword(ctx, createdNamespace); err != nil {
+	if err := adminPassword(ctx, locals, createdNamespace); err != nil {
 		return errors.Wrap(err, "failed to create admin secret")
 	}
 	//install the redis helm-chart
-	if err := helmChart(ctx, createdNamespace, s.Labels); err != nil {
+	if err := helmChart(ctx, locals, createdNamespace, s.Labels); err != nil {
 		return errors.Wrap(err, "failed to create helm-chart resources")
 	}
 
@@ -49,7 +50,7 @@ func (s *ResourceStack) Resources(ctx *pulumi.Context) error {
 	if locals.RedisKubernetes.Spec.Ingress != nil &&
 		locals.RedisKubernetes.Spec.Ingress.IsEnabled &&
 		locals.RedisKubernetes.Spec.Ingress.EndpointDomainName != "" {
-		if err := loadBalancerIngress(ctx, createdNamespace); err != nil {
+		if err := loadBalancerIngress(ctx, locals, createdNamespace); err != nil {
 			return errors.Wrap(err, "failed to create load-balancer ingress resources")
 		}
 	}
