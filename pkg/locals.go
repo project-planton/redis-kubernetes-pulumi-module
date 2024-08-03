@@ -40,7 +40,7 @@ func initializeLocals(ctx *pulumi.Context, stackInput *model.RedisKubernetesStac
 	//export kubernetes service name
 	ctx.Export(outputs.Service, pulumi.String(locals.KubeServiceName))
 
-	locals.KubeServiceFqdn = fmt.Sprintf("%s.%s.svc.cluster.local.", locals.KubeServiceName, locals.Namespace)
+	locals.KubeServiceFqdn = fmt.Sprintf("%s.%s.svc.cluster.local", locals.KubeServiceName, locals.Namespace)
 
 	//export kubernetes endpoint
 	ctx.Export(outputs.KubeEndpoint, pulumi.String(locals.KubeServiceFqdn))
