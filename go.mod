@@ -2,26 +2,22 @@ module github.com/plantoncloud/redis-kubernetes-pulumi-module
 
 go 1.22
 
-replace github.com/plantoncloud/planton-cloud-apis => ../../plantoncloud/planton-cloud-apis
+//replace github.com/plantoncloud/planton-cloud-apis => ../../plantoncloud/planton-cloud-apis
 
-replace github.com/plantoncloud/stack-job-runner-golang-sdk => ../../plantoncloud/stack-job-runner-golang-sdk
+//replace github.com/plantoncloud/stack-job-runner-golang-sdk => ../../plantoncloud/stack-job-runner-golang-sdk
 
-replace github.com/plantoncloud/pulumi-module-golang-commons => ../../plantoncloud/pulumi-module-golang-commons
+//replace github.com/plantoncloud/pulumi-module-golang-commons => ../../plantoncloud/pulumi-module-golang-commons
 
-replace github.com/plantoncloud/kubernetes-crd-pulumi-types => ../../plantoncloud/kubernetes-crd-pulumi-types
+//replace github.com/plantoncloud/kubernetes-crd-pulumi-types => ../../plantoncloud/kubernetes-crd-pulumi-types
 
 require (
 	github.com/pkg/errors v0.9.1
+	github.com/plantoncloud/planton-cloud-apis v0.1.0
+	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-20240808151947-30fe31a468ca
+	github.com/plantoncloud/stack-job-runner-golang-sdk v0.0.56
 	github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.15.0
-	github.com/pulumi/pulumi/sdk/v3 v3.127.0
-	google.golang.org/grpc v1.63.2 // indirect
-)
-
-require (
-	github.com/plantoncloud/planton-cloud-apis v0.0.211
-	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-00010101000000-000000000000
-	github.com/plantoncloud/stack-job-runner-golang-sdk v0.0.52
 	github.com/pulumi/pulumi-random/sdk/v4 v4.16.3
+	github.com/pulumi/pulumi/sdk/v3 v3.127.0
 )
 
 require (
@@ -43,7 +39,6 @@ require (
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/djherbis/times v1.5.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
@@ -72,13 +67,11 @@ require (
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/nxadm/tail v1.4.11 // indirect
-	github.com/onsi/gomega v1.29.0 // indirect
 	github.com/opentracing/basictracer-go v1.1.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pgavlin/fx v0.1.6 // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/term v1.1.0 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.9.1 // indirect
 	github.com/pulumi/pulumi-gcp/sdk/v7 v7.29.0 // indirect
@@ -88,7 +81,6 @@ require (
 	github.com/santhosh-tekuri/jsonschema/v5 v5.0.0 // indirect
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/skeema/knownhosts v1.2.2 // indirect
-	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/cobra v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
@@ -97,7 +89,7 @@ require (
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/zclconf/go-cty v1.13.2 // indirect
-	go.uber.org/atomic v1.10.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/crypto v0.24.0 // indirect
 	golang.org/x/exp v0.0.0-20240604190554-fc45aab8b7f8 // indirect
 	golang.org/x/mod v0.18.0 // indirect
@@ -107,19 +99,11 @@ require (
 	golang.org/x/term v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/tools v0.22.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240314234333-6e1732d8331c // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240311173647-c811ad7063a7 // indirect
+	google.golang.org/grpc v1.63.2 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/frand v1.4.2 // indirect
-)
-
-// Containous forks //https://github.com/traefik/traefik/issues/6873
-replace (
-	github.com/abbot/go-http-auth => github.com/containous/go-http-auth v0.4.1-0.20200324110947-a37a7636d23e
-	//github.com/go-check/check => github.com/containous/check v0.0.0-20170915194414-ca0bf163426a
-	github.com/gorilla/mux => github.com/containous/mux v0.0.0-20181024131434-c33f32e26898
-	github.com/mailgun/minheap => github.com/containous/minheap v0.0.0-20190809180810-6e71eb837595
-	github.com/mailgun/multibuf => github.com/containous/multibuf v0.0.0-20190809014333-8b6c9a7e6bba
 )
