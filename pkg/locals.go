@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"fmt"
-	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes/model"
+	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes"
 	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/outputs"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -14,11 +14,11 @@ type Locals struct {
 	KubeServiceFqdn         string
 	KubeServiceName         string
 	Namespace               string
-	RedisKubernetes         *model.RedisKubernetes
+	RedisKubernetes         *rediskubernetes.RedisKubernetes
 	RedisPodSelectorLabels  map[string]string
 }
 
-func initializeLocals(ctx *pulumi.Context, stackInput *model.RedisKubernetesStackInput) *Locals {
+func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetes.RedisKubernetesStackInput) *Locals {
 	locals := &Locals{}
 
 	redisKubernetes := stackInput.ApiResource
