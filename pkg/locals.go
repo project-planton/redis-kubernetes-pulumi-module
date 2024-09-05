@@ -29,6 +29,8 @@ func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetes.RedisKube
 	//decide on the namespace
 	locals.Namespace = redisKubernetes.Metadata.Id
 
+	ctx.Export(outputs.Namespace, pulumi.String(locals.Namespace))
+
 	locals.RedisPodSelectorLabels = map[string]string{
 		"app.kubernetes.io/component": "master",
 		"app.kubernetes.io/instance":  redisKubernetes.Metadata.Id,
