@@ -3,6 +3,7 @@ package pkg
 import (
 	"encoding/base64"
 	"github.com/pkg/errors"
+	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/outputs"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
 	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
@@ -33,7 +34,7 @@ func adminPassword(ctx *pulumi.Context, locals *Locals, createdNamespace *kubern
 	}).(pulumi.StringOutput)
 
 	// create or update the secret
-	_, err = kubernetescorev1.NewSecret(ctx,
+	createdSecret, err := kubernetescorev1.NewSecret(ctx,
 		vars.RedisPasswordSecretName,
 		&kubernetescorev1.SecretArgs{
 			Metadata: &metav1.ObjectMetaArgs{
@@ -44,9 +45,13 @@ func adminPassword(ctx *pulumi.Context, locals *Locals, createdNamespace *kubern
 				vars.RedisPasswordSecretKey: base64Password,
 			},
 		}, pulumi.Parent(createdNamespace))
-
 	if err != nil {
 		return errors.Wrap(err, "failed to admin secret")
 	}
+
+	ctx.Export(outputs.RedisUsername, pulumi.String("default"))
+	ctx.Export(outputs.RedisPasswordSecretName, createdSecret.Metadata.Name())
+	ctx.Export(outputs.RedisPasswordSecretKey, pulumi.String(vars.RedisPasswordSecretKey))
+
 	return nil
 }
