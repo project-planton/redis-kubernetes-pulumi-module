@@ -2,8 +2,8 @@ package pkg
 
 import (
 	"github.com/pkg/errors"
+	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/datatypes/stringmaps/convertstringmaps"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/containerresources"
-	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/helm/convertmaps"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	helmv3 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/helm/v3"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -22,7 +22,7 @@ func helmChart(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetes
 				"fullnameOverride": pulumi.String(locals.RedisKubernetes.Metadata.Name),
 				"architecture":     pulumi.String("standalone"),
 				"master": pulumi.Map{
-					"podLabels": convertmaps.ConvertGoMapToPulumiMap(labels),
+					"podLabels": convertstringmaps.ConvertGoStringMapToPulumiMap(labels),
 					"resources": containerresources.ConvertToPulumiMap(locals.RedisKubernetes.Spec.Container.Resources),
 					"persistence": pulumi.Map{
 						"enabled": pulumi.Bool(locals.RedisKubernetes.Spec.Container.IsPersistenceEnabled),
@@ -30,7 +30,7 @@ func helmChart(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetes
 					},
 				},
 				"replica": pulumi.Map{
-					"podLabels":    convertmaps.ConvertGoMapToPulumiMap(labels),
+					"podLabels":    convertstringmaps.ConvertGoStringMapToPulumiMap(labels),
 					"replicaCount": pulumi.Int(locals.RedisKubernetes.Spec.Container.Replicas),
 					"resources":    containerresources.ConvertToPulumiMap(locals.RedisKubernetes.Spec.Container.Resources),
 					"persistence": pulumi.Map{
