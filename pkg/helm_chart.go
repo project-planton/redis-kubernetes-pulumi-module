@@ -9,7 +9,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func helmChart(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetescorev1.Namespace, labels map[string]string) error {
+func helmChart(ctx *pulumi.Context, locals *Locals,
+	createdNamespace *kubernetescorev1.Namespace) error {
 	//install helm-chart
 	_, err := helmv3.NewChart(ctx,
 		locals.RedisKubernetes.Metadata.Id,
@@ -22,7 +23,7 @@ func helmChart(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetes
 				"fullnameOverride": pulumi.String(locals.RedisKubernetes.Metadata.Name),
 				"architecture":     pulumi.String("standalone"),
 				"master": pulumi.Map{
-					"podLabels": convertstringmaps.ConvertGoStringMapToPulumiMap(labels),
+					"podLabels": convertstringmaps.ConvertGoStringMapToPulumiMap(locals.Labels),
 					"resources": containerresources.ConvertToPulumiMap(locals.RedisKubernetes.Spec.Container.Resources),
 					"persistence": pulumi.Map{
 						"enabled": pulumi.Bool(locals.RedisKubernetes.Spec.Container.IsPersistenceEnabled),
@@ -30,7 +31,7 @@ func helmChart(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetes
 					},
 				},
 				"replica": pulumi.Map{
-					"podLabels":    convertstringmaps.ConvertGoStringMapToPulumiMap(labels),
+					"podLabels":    convertstringmaps.ConvertGoStringMapToPulumiMap(locals.Labels),
 					"replicaCount": pulumi.Int(locals.RedisKubernetes.Spec.Container.Replicas),
 					"resources":    containerresources.ConvertToPulumiMap(locals.RedisKubernetes.Spec.Container.Resources),
 					"persistence": pulumi.Map{
