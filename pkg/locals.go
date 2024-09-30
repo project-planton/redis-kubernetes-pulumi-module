@@ -1,9 +1,8 @@
 package pkg
 
 import (
+	rediskubernetesv1 "buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go/project/planton/apis/provider/kubernetes/rediskubernetes/v1"
 	"fmt"
-	"github.com/plantoncloud/project-planton/apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/rediskubernetes"
-	"github.com/plantoncloud/project-planton/apis/zzgo/cloud/planton/apis/commons/apiresource/enums/apiresourcekind"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/kuberneteslabelkeys"
 	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/outputs"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -17,12 +16,12 @@ type Locals struct {
 	KubeServiceFqdn         string
 	KubeServiceName         string
 	Namespace               string
-	RedisKubernetes         *rediskubernetes.RedisKubernetes
+	RedisKubernetes         *rediskubernetesv1.RedisKubernetes
 	RedisPodSelectorLabels  map[string]string
 	Labels                  map[string]string
 }
 
-func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetes.RedisKubernetesStackInput) *Locals {
+func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetesv1.RedisKubernetesStackInput) *Locals {
 	locals := &Locals{}
 
 	redisKubernetes := stackInput.Target
@@ -35,7 +34,7 @@ func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetes.RedisKube
 		kuberneteslabelkeys.Organization: stackInput.Target.Spec.EnvironmentInfo.OrgId,
 		kuberneteslabelkeys.Resource:     strconv.FormatBool(true),
 		kuberneteslabelkeys.ResourceId:   stackInput.Target.Metadata.Id,
-		kuberneteslabelkeys.ResourceKind: apiresourcekind.ApiResourceKind_redis_kubernetes.String(),
+		kuberneteslabelkeys.ResourceKind: "redis_kubernetes",
 	}
 
 	//decide on the namespace
