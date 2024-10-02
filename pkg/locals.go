@@ -1,7 +1,7 @@
 package pkg
 
 import (
-	rediskubernetesv1 "buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go/project/planton/apis/provider/kubernetes/rediskubernetes/v1"
+	rediskubernetesv1 "buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go/project/planton/provider/kubernetes/rediskubernetes/v1"
 	"fmt"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/kuberneteslabelkeys"
 	"github.com/plantoncloud/redis-kubernetes-pulumi-module/pkg/outputs"
