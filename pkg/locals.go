@@ -26,6 +26,11 @@ func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetesv1.RedisKu
 
 	redisKubernetes := stackInput.Target
 
+	//if the id is empty, use name as id
+	if redisKubernetes.Metadata.Id == "" {
+		redisKubernetes.Metadata.Id = redisKubernetes.Metadata.Name
+	}
+
 	//assign value for the local variable to make it available across the module.
 	locals.RedisKubernetes = redisKubernetes
 
