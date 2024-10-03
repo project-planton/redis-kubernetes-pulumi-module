@@ -24,25 +24,25 @@ type Locals struct {
 func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetesv1.RedisKubernetesStackInput) *Locals {
 	locals := &Locals{}
 
-	redisKubernetes := stackInput.Target
-
 	//if the id is empty, use name as id
-	if redisKubernetes.Metadata.Id == "" {
-		redisKubernetes.Metadata.Id = redisKubernetes.Metadata.Name
+	if stackInput.Target.Metadata.Id == "" {
+		stackInput.Target.Metadata.Id = stackInput.Target.Metadata.Name
 	}
+
+	redisKubernetes := stackInput.Target
 
 	//assign value for the local variable to make it available across the module.
 	locals.RedisKubernetes = redisKubernetes
 
 	locals.Labels = map[string]string{
 		kuberneteslabelkeys.Resource:     strconv.FormatBool(true),
-		kuberneteslabelkeys.ResourceId:   stackInput.Target.Metadata.Id,
+		kuberneteslabelkeys.ResourceId:   redisKubernetes.Metadata.Id,
 		kuberneteslabelkeys.ResourceKind: "redis_kubernetes",
 	}
 
 	if redisKubernetes.Spec.EnvironmentInfo != nil {
-		locals.Labels[kuberneteslabelkeys.Environment] = stackInput.Target.Spec.EnvironmentInfo.EnvId
-		locals.Labels[kuberneteslabelkeys.Organization] = stackInput.Target.Spec.EnvironmentInfo.OrgId
+		locals.Labels[kuberneteslabelkeys.Environment] = redisKubernetes.Spec.EnvironmentInfo.EnvId
+		locals.Labels[kuberneteslabelkeys.Organization] = redisKubernetes.Spec.EnvironmentInfo.OrgId
 	}
 
 	//decide on the namespace
