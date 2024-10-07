@@ -7,9 +7,9 @@ go 1.23.1
 //replace github.com/plantoncloud/kubernetes-crd-pulumi-types => ../../plantoncloud/kubernetes-crd-pulumi-types
 
 require (
-	buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go v1.34.2-20241003094048-890f92dd6eb4.2
+	buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go v1.34.2-20241007155551-8c41b14da4be.2
 	github.com/pkg/errors v0.9.1
-	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-20241003110703-1d27875e1587
+	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-20241003135220-d540f3f192f8
 	github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.15.0
 	github.com/pulumi/pulumi-random/sdk/v4 v4.16.3
 	github.com/pulumi/pulumi/sdk/v3 v3.130.0
@@ -68,6 +68,7 @@ require (
 	github.com/pgavlin/fx v0.1.6 // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/term v1.1.0 // indirect
+	github.com/plantoncloud/kubernetes-crd-pulumi-types v0.0.0-20240903231550-b86827cb2eb9 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.9.1 // indirect
 	github.com/pulumi/pulumi-gcp/sdk/v7 v7.29.0 // indirect
