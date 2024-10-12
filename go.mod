@@ -1,22 +1,22 @@
-module github.com/plantoncloud/redis-kubernetes-pulumi-module
+module github.com/project-planton/redis-kubernetes-pulumi-module
 
 go 1.23.1
 
-//replace github.com/plantoncloud/pulumi-module-golang-commons => ../../plantoncloud/pulumi-module-golang-commons
+//replace github.com/project-planton/pulumi-module-golang-commons => ../pulumi-module-golang-commons
 
-//replace github.com/plantoncloud/kubernetes-crd-pulumi-types => ../../plantoncloud/kubernetes-crd-pulumi-types
+//replace github.com/project-planton/kubernetes-crd-pulumi-types => ../kubernetes-crd-pulumi-types
 
 require (
-	buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go v1.34.2-20241007155551-8c41b14da4be.2
+	buf.build/gen/go/project-planton/apis/protocolbuffers/go v1.35.1-20241012091823-fbe6fb0746f9.1
 	github.com/pkg/errors v0.9.1
-	github.com/plantoncloud/pulumi-module-golang-commons v0.0.0-20241003135220-d540f3f192f8
+	github.com/project-planton/pulumi-module-golang-commons v0.0.0-20241012092225-2e664ff79f70
 	github.com/pulumi/pulumi-kubernetes/sdk/v4 v4.15.0
 	github.com/pulumi/pulumi-random/sdk/v4 v4.16.3
 	github.com/pulumi/pulumi/sdk/v3 v3.130.0
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.34.2-20240920164238-5a7b106cbb87.2 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.35.1-20240920164238-5a7b106cbb87.1 // indirect
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
@@ -68,7 +68,7 @@ require (
 	github.com/pgavlin/fx v0.1.6 // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/term v1.1.0 // indirect
-	github.com/plantoncloud/kubernetes-crd-pulumi-types v0.0.0-20240903231550-b86827cb2eb9 // indirect
+	// indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
 	github.com/pulumi/esc v0.9.1 // indirect
 	github.com/pulumi/pulumi-gcp/sdk/v7 v7.29.0 // indirect
@@ -100,7 +100,7 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20240528184218-531527333157 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240604185151-ef581f913117 // indirect
 	google.golang.org/grpc v1.65.0 // indirect
-	google.golang.org/protobuf v1.34.2 // indirect
+	google.golang.org/protobuf v1.35.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/frand v1.4.2 // indirect
