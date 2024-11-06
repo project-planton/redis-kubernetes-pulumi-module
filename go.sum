@@ -1,7 +1,7 @@
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.35.1-20240920164238-5a7b106cbb87.1 h1:9wP6ZZYWnF2Z0TxmII7m3XNykxnP4/w8oXeth6ekcRI=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.35.1-20240920164238-5a7b106cbb87.1/go.mod h1:Duw/9JoXkXIydyASnLYIiufkzySThoqavOsF+IihqvM=
-buf.build/gen/go/project-planton/apis/protocolbuffers/go v1.35.1-20241012091823-fbe6fb0746f9.1 h1:XgPrHPAdsbcq07Vh53kpllTg/DCNd+Oe1cZbicGAEs0=
-buf.build/gen/go/project-planton/apis/protocolbuffers/go v1.35.1-20241012091823-fbe6fb0746f9.1/go.mod h1:txK5Qis4qNBIsUPsnUmdCgudq3nj9Q681R/PaOBT2r8=
+buf.build/gen/go/project-planton/apis/protocolbuffers/go v1.35.1-20241106042319-91bc33237f01.1 h1:xwl5Qx7iyVdpUOjr2njFs70NznsQL67WLMoz5De67UQ=
+buf.build/gen/go/project-planton/apis/protocolbuffers/go v1.35.1-20241106042319-91bc33237f01.1/go.mod h1:txK5Qis4qNBIsUPsnUmdCgudq3nj9Q681R/PaOBT2r8=
 dario.cat/mergo v1.0.0 h1:AGCNq9Evsj31mOgNPcLyXc+4PNABt905YmuqPYYpBWk=
 dario.cat/mergo v1.0.0/go.mod h1:uNxQE+84aUszobStD9th8a29P2fMDhsBdgRYvZOxGmk=
 github.com/BurntSushi/toml v1.2.1 h1:9F2/+DoOYIOksmaJFPw1tGFy1eDnIJXg+UHjuD8lTak=
