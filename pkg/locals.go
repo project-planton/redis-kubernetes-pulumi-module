@@ -77,15 +77,15 @@ func initializeLocals(ctx *pulumi.Context, stackInput *rediskubernetesv1.RedisKu
 
 	if redisKubernetes.Spec.Ingress == nil ||
 		!redisKubernetes.Spec.Ingress.IsEnabled ||
-		redisKubernetes.Spec.Ingress.EndpointDomainName == "" {
+		redisKubernetes.Spec.Ingress.DnsDomain == "" {
 		return locals
 	}
 
 	locals.IngressExternalHostname = fmt.Sprintf("%s.%s", redisKubernetes.Metadata.Id,
-		redisKubernetes.Spec.Ingress.EndpointDomainName)
+		redisKubernetes.Spec.Ingress.DnsDomain)
 
 	locals.IngressInternalHostname = fmt.Sprintf("%s-internal.%s", redisKubernetes.Metadata.Id,
-		redisKubernetes.Spec.Ingress.EndpointDomainName)
+		redisKubernetes.Spec.Ingress.DnsDomain)
 
 	//export ingress hostnames
 	ctx.Export(outputs.IngressExternalHostname, pulumi.String(locals.IngressExternalHostname))
